@@ -37,7 +37,14 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/english-app-api-e2e/**/*"]
+      "exclude": [
+        "apps/english-app-api-e2e/**/*",
+        "apps/api-gateway-e2e/**/*",
+        "apps/account-e2e/**/*",
+        "apps/profile-e2e/**/*",
+        "apps/words-e2e/**/*",
+        "apps/games-e2e/**/*"
+      ]
     }
   ]
 }

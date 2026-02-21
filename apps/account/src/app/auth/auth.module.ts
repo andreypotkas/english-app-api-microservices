@@ -1,0 +1,21 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
+import { Account } from '../entities/account.entity';
+import { Profile } from '../entities/profile.entity';
+import { AuthService } from './auth.service';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([Account, Profile]),
+    JwtModule.register({
+      secret: JWT_SECRET,
+      signOptions: { expiresIn: '7d' },
+    }),
+  ],
+  providers: [AuthService],
+  exports: [AuthService],
+})
+export class AuthModule {}

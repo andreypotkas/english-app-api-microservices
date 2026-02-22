@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Delete, Inject, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { ApiTag } from '../decorators/api-endpoint.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { DocGet, DocPost, DocDelete } from '../decorators/doc-route.decorator';
 import { User } from '../../decorators/user.decorator';
 import type { JwtPayload } from '../auth/jwt.strategy';
-import { USER_WORDS, WORDS, UserWordType, AccessType } from '@english-app-api/shared-contracts';
+import { USER_WORDS, WORDS, UserWordType, AccessType, ApiResponse } from '@english-app-api/shared-contracts';
 import { BookWord } from '@english-app-api/entities';
 
 @ApiTag('user-words')
@@ -18,12 +18,12 @@ export class UserWordsController {
     @Inject('WORDS_SERVICE') private wordsClient: ClientProxy,
   ) {}
 
-  @DocPost(':bookWordId/favorite', undefined, AccessType.User)
+  @DocPost(':bookWordId/favorite', ApiResponse, AccessType.User)
   async addFavorite(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<void> {
-    await firstValueFrom(
+  ): Promise<ApiResponse> {
+    return lastValueFrom(
       this.accountClient.send(USER_WORDS.ADD, {
         userId: user.sub,
         book_word_id: bookWordId,
@@ -32,12 +32,12 @@ export class UserWordsController {
     );
   }
 
-  @DocDelete(':bookWordId/favorite', undefined, AccessType.User)
+  @DocDelete(':bookWordId/favorite', ApiResponse, AccessType.User)
   async removeFavorite(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<void> {
-    await firstValueFrom(
+  ): Promise<ApiResponse> {
+    return lastValueFrom(
       this.accountClient.send(USER_WORDS.REMOVE, {
         userId: user.sub,
         book_word_id: bookWordId,
@@ -46,12 +46,12 @@ export class UserWordsController {
     );
   }
 
-  @DocPost(':bookWordId/studied', undefined, AccessType.User)
+  @DocPost(':bookWordId/studied', ApiResponse, AccessType.User)
   async addStudied(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<void> {
-    await firstValueFrom(
+  ): Promise<ApiResponse> {
+    return lastValueFrom(
       this.accountClient.send(USER_WORDS.ADD, {
         userId: user.sub,
         book_word_id: bookWordId,
@@ -60,12 +60,12 @@ export class UserWordsController {
     );
   }
 
-  @DocDelete(':bookWordId/studied', undefined, AccessType.User)
+  @DocDelete(':bookWordId/studied', ApiResponse, AccessType.User)
   async removeStudied(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<void> {
-    await firstValueFrom(
+  ): Promise<ApiResponse> {
+    return lastValueFrom(
       this.accountClient.send(USER_WORDS.REMOVE, {
         userId: user.sub,
         book_word_id: bookWordId,
@@ -76,7 +76,7 @@ export class UserWordsController {
 
   @DocGet('favorites', undefined, AccessType.User)
   async getFavorites(@User() user: JwtPayload): Promise<BookWord[]> {
-    const wordIds: number[] = await firstValueFrom(
+    const wordIds: number[] = await lastValueFrom(
       this.accountClient.send(USER_WORDS.GET_IDS, {
         userId: user.sub,
         type: UserWordType.Favorite,
@@ -87,14 +87,14 @@ export class UserWordsController {
       return [];
     }
 
-    return firstValueFrom(
+    return lastValueFrom(
       this.wordsClient.send(WORDS.GET_BY_IDS, { wordIds }),
     );
   }
 
   @DocGet('favorites/ids', undefined, AccessType.User)
   async getFavoriteIds(@User() user: JwtPayload): Promise<number[]> {
-    return firstValueFrom(
+    return lastValueFrom(
       this.accountClient.send(USER_WORDS.GET_IDS, {
         userId: user.sub,
         type: UserWordType.Favorite,
@@ -104,7 +104,7 @@ export class UserWordsController {
 
   @DocGet('studied', undefined, AccessType.User)
   async getStudied(@User() user: JwtPayload): Promise<BookWord[]> {
-    const wordIds: number[] = await firstValueFrom(
+    const wordIds: number[] = await lastValueFrom(
       this.accountClient.send(USER_WORDS.GET_IDS, {
         userId: user.sub,
         type: UserWordType.Studied,
@@ -115,14 +115,14 @@ export class UserWordsController {
       return [];
     }
 
-    return firstValueFrom(
+    return lastValueFrom(
       this.wordsClient.send(WORDS.GET_BY_IDS, { wordIds }),
     );
   }
 
   @DocGet('studied/ids', undefined, AccessType.User)
   async getStudiedIds(@User() user: JwtPayload): Promise<number[]> {
-    return firstValueFrom(
+    return lastValueFrom(
       this.accountClient.send(USER_WORDS.GET_IDS, {
         userId: user.sub,
         type: UserWordType.Studied,

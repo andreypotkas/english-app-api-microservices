@@ -1,5 +1,5 @@
-import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
-import { ApiParam, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Inject, Query } from '@nestjs/common';
+import { ApiQuery } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { BOOKS, AccessType } from '@english-app-api/shared-contracts';
@@ -26,11 +26,5 @@ export class BooksController {
         offset,
       }),
     );
-  }
-
-  @DocGet(':id', undefined, AccessType.Public)
-  @ApiParam({ name: 'id', description: 'Book ID' })
-  async getBook(@Param('id') id: string): Promise<Book> {
-    return firstValueFrom(this.wordsClient.send(BOOKS.GET_ONE, { id: parseInt(id, 10) }));
   }
 }

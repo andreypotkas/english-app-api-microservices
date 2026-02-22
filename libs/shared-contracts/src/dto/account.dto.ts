@@ -40,3 +40,8 @@ export interface UserWordListPayload {
 export interface UserWordIdsPayload {
   type: UserWordType;
 }
+
+export interface ApiResponse {
+  success: boolean;
+  message: string;
+}

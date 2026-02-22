@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserWord, UserWordType } from '@english-app-api/entities';
@@ -10,13 +10,13 @@ export class UserWordsService {
     private readonly userWordRepository: Repository<UserWord>,
   ) {}
 
-  async addWord(userId: number, bookWordId: number, type: UserWordType): Promise<UserWord> {
+  async addWord(userId: number, bookWordId: number, type: UserWordType): Promise<{ success: boolean; message: string }> {
     const existing = await this.userWordRepository.findOne({
       where: { user_id: userId, book_word_id: bookWordId, type },
     });
 
     if (existing) {
-      return existing;
+      return { success: true, message: 'Word already in list' };
     }
 
     const userWord = this.userWordRepository.create({
@@ -25,17 +25,20 @@ export class UserWordsService {
       type,
     });
 
-    return this.userWordRepository.save(userWord);
+    await this.userWordRepository.save(userWord);
+    return { success: true, message: 'Word added successfully' };
   }
 
-  async removeWord(userId: number, bookWordId: number, type: UserWordType): Promise<void> {
+  async removeWord(userId: number, bookWordId: number, type: UserWordType): Promise<{ success: boolean; message: string }> {
     const userWord = await this.userWordRepository.findOne({
       where: { user_id: userId, book_word_id: bookWordId, type },
     });
 
     if (userWord) {
       await this.userWordRepository.remove(userWord);
+      return { success: true, message: 'Word removed successfully' };
     }
+    return { success: false, message: 'Word not found in list' };
   }
 
   async getWordIds(userId: number, type: UserWordType): Promise<number[]> {

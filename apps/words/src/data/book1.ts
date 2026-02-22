@@ -8402,5 +8402,3 @@ export const book1 = [
   },
 ];
 
-export default book1;
-module.exports = book1; module.exports.default = book1;

@@ -31,6 +31,13 @@ export class AppService {
     return query.getMany();
   }
 
+  async getWordsByIds(wordIds: number[]): Promise<BookWord[]> {
+    if (wordIds.length === 0) {
+      return [];
+    }
+    return this.bookWordRepository.findByIds(wordIds);
+  }
+
   async getBooks(payload: { limit: number; offset: number }): Promise<Book[]> {
     return this.bookRepository.find({
       take: payload.limit,

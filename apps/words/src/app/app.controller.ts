@@ -14,8 +14,15 @@ export class AppController {
     return this.appService.getWordsList(payload);
   }
 
+  @MessagePattern(WORDS.GET_BY_IDS)
+  async getWordsByIds(payload: { wordIds: number[] }): Promise<BookWord[]> {
+    return this.appService.getWordsByIds(payload.wordIds);
+  }
+
   @MessagePattern(BOOKS.GET_LIST)
   async getBooks(payload: { limit: number; offset: number }): Promise<Book[]> {
+    console.log('1111');
+
     return this.appService.getBooks(payload);
   }
 

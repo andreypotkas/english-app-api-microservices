@@ -28,6 +28,7 @@ export const BOOKS = {
 export const WORDS = {
   GET_ONE: 'words.get_one',
   GET_LIST: 'words.get_list',
+  GET_BY_IDS: 'words.get_by_ids',
 } as const;
 
 export const GAMES = {

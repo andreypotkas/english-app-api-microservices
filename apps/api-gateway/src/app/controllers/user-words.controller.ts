@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Inject, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Inject, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { ApiTag } from '../decorators/api-endpoint.decorator';
@@ -6,14 +6,17 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { DocGet, DocPost, DocDelete } from '../decorators/doc-route.decorator';
 import { User } from '../../decorators/user.decorator';
 import type { JwtPayload } from '../auth/jwt.strategy';
-import { USER_WORDS, UserWordType, AccessType } from '@english-app-api/shared-contracts';
+import { USER_WORDS, WORDS, UserWordType, AccessType } from '@english-app-api/shared-contracts';
 import { BookWord } from '@english-app-api/entities';
 
 @ApiTag('user-words')
 @ApiBearerAuth('JWT')
 @Controller('user-words')
 export class UserWordsController {
-  constructor(@Inject('ACCOUNT_SERVICE') private accountClient: ClientProxy) {}
+  constructor(
+    @Inject('ACCOUNT_SERVICE') private accountClient: ClientProxy,
+    @Inject('WORDS_SERVICE') private wordsClient: ClientProxy,
+  ) {}
 
   @DocPost(':bookWordId/favorite', undefined, AccessType.User)
   async addFavorite(
@@ -73,11 +76,19 @@ export class UserWordsController {
 
   @DocGet('favorites', undefined, AccessType.User)
   async getFavorites(@User() user: JwtPayload): Promise<BookWord[]> {
-    return firstValueFrom(
-      this.accountClient.send(USER_WORDS.GET_LIST, {
+    const wordIds: number[] = await firstValueFrom(
+      this.accountClient.send(USER_WORDS.GET_IDS, {
         userId: user.sub,
         type: UserWordType.Favorite,
       }),
+    );
+
+    if (wordIds.length === 0) {
+      return [];
+    }
+
+    return firstValueFrom(
+      this.wordsClient.send(WORDS.GET_BY_IDS, { wordIds }),
     );
   }
 
@@ -93,11 +104,19 @@ export class UserWordsController {
 
   @DocGet('studied', undefined, AccessType.User)
   async getStudied(@User() user: JwtPayload): Promise<BookWord[]> {
-    return firstValueFrom(
-      this.accountClient.send(USER_WORDS.GET_LIST, {
+    const wordIds: number[] = await firstValueFrom(
+      this.accountClient.send(USER_WORDS.GET_IDS, {
         userId: user.sub,
         type: UserWordType.Studied,
       }),
+    );
+
+    if (wordIds.length === 0) {
+      return [];
+    }
+
+    return firstValueFrom(
+      this.wordsClient.send(WORDS.GET_BY_IDS, { wordIds }),
     );
   }
 

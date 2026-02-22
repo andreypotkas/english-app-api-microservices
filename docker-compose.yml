@@ -50,8 +50,14 @@ services:
     command: node dist/apps/words/main.js
     environment:
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     depends_on:
       rabbitmq:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
 
   games:

@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserWordsService } from './user-words.service';
 import { USER_WORDS, UserWordPayload, UserWordListPayload } from '@english-app-api/shared-contracts';
-import { UserWord, BookWord } from '@english-app-api/entities';
+import { UserWord } from '@english-app-api/entities';
 
 @Controller()
 export class UserWordsController {
@@ -16,11 +16,6 @@ export class UserWordsController {
   @MessagePattern(USER_WORDS.REMOVE)
   async removeWord(@Payload() payload: UserWordPayload & { userId: number }): Promise<void> {
     return this.userWordsService.removeWord(payload.userId, payload.book_word_id, payload.type);
-  }
-
-  @MessagePattern(USER_WORDS.GET_LIST)
-  async getWords(@Payload() payload: UserWordListPayload & { userId: number }): Promise<BookWord[]> {
-    return this.userWordsService.getWords(payload.userId, payload.type);
   }
 
   @MessagePattern(USER_WORDS.GET_IDS)

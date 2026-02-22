@@ -1,7 +1,6 @@
-import { Entity, Column, ManyToOne, JoinColumn, Unique } from 'typeorm';
+import { Entity, Column, Unique } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity } from './base.entity';
-import { BookWord } from './book-word.entity';
 
 export enum UserWordType {
   Favorite = 'favorite',
@@ -18,11 +17,6 @@ export class UserWord extends BaseEntity {
   @ApiProperty()
   @Column({ name: 'book_word_id' })
   book_word_id!: number;
-
-  @ApiProperty({ type: () => BookWord })
-  @ManyToOne(() => BookWord, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'book_word_id' })
-  book_word!: BookWord;
 
   @ApiProperty({ enum: UserWordType })
   @Column({ type: 'enum', enum: UserWordType })

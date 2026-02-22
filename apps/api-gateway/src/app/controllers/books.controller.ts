@@ -15,10 +15,7 @@ export class BooksController {
   @DocGet(undefined, undefined, AccessType.Public)
   @ApiQuery({ name: 'page', required: false, description: 'Page number (default: 1)' })
   @ApiQuery({ name: 'limit', required: false, description: 'Items per page (default: 10)' })
-  async getBooks(
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ): Promise<Book[]> {
+  async getBooks(@Query('page') page?: string, @Query('limit') limit?: string): Promise<Book[]> {
     const pageNum = page ? parseInt(page, 10) : 1;
     const limitNum = limit ? parseInt(limit, 10) : 10;
     const offset = (pageNum - 1) * limitNum;
@@ -34,8 +31,6 @@ export class BooksController {
   @DocGet(':id', undefined, AccessType.Public)
   @ApiParam({ name: 'id', description: 'Book ID' })
   async getBook(@Param('id') id: string): Promise<Book> {
-    return firstValueFrom(
-      this.wordsClient.send(BOOKS.GET_ONE, { id: parseInt(id, 10) }),
-    );
+    return firstValueFrom(this.wordsClient.send(BOOKS.GET_ONE, { id: parseInt(id, 10) }));
   }
 }

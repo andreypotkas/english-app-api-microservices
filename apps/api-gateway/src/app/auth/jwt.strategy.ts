@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import type { UserRole, UserPlan } from '@english-app-api/shared-contracts';
+import { UserRole } from '@english-app-api/entities';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
 
@@ -9,7 +9,6 @@ export interface JwtPayload {
   sub: string;
   email: string;
   role: UserRole;
-  plan?: UserPlan;
 }
 
 @Injectable()
@@ -26,8 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     return {
       sub: payload.sub,
       email: payload.email,
-      role: payload.role ?? 'user',
-      plan: payload.plan ?? 'free',
+      role: payload.role ?? UserRole.User,
     };
   }
 }

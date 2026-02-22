@@ -1,5 +1,12 @@
-export type UserRole = 'user' | 'admin';
-export type UserPlan = 'free' | 'premium';
+import { UserRole, UserWordType } from '@english-app-api/entities';
+
+export { UserRole, UserWordType };
+
+export enum AccessType {
+  Public = 'public',
+  User = 'user',
+  Admin = 'admin',
+}
 
 export interface RegisterPayload {
   email: string;
@@ -19,4 +26,17 @@ export interface AuthResponse {
 export interface AuthErrorResponse {
   error: string;
   statusCode: number;
+}
+
+export interface UserWordPayload {
+  book_word_id: number;
+  type: UserWordType;
+}
+
+export interface UserWordListPayload {
+  type: UserWordType;
+}
+
+export interface UserWordIdsPayload {
+  type: UserWordType;
 }

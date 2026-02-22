@@ -1,7 +1,8 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AuthService } from './auth/auth.service';
-import { ACCOUNT, PROFILE } from '@english-app-api/shared-contracts';
+import { UserWordsService } from './user-words/user-words.service';
+import { ACCOUNT, PROFILE, USER_WORDS } from '@english-app-api/shared-contracts';
 import type {
   RegisterPayload,
   LoginPayload,
@@ -10,11 +11,17 @@ import type {
   GetProfilePayload,
   UpdateProfilePayload,
 } from '@english-app-api/shared-contracts';
-import { Profile } from 'apps/account/src/app/entities/profile.entity';
+import { Profile } from '@english-app-api/entities';
+import { UserWordsController } from './user-words/user-words.controller';
 
 @Controller()
-export class AppController {
-  constructor(private readonly authService: AuthService) {}
+export class AppController extends UserWordsController {
+  constructor(
+    private readonly authService: AuthService,
+    userWordsService: UserWordsService,
+  ) {
+    super(userWordsService);
+  }
 
   @MessagePattern(ACCOUNT.REGISTER)
   async register(payload: RegisterPayload): Promise<AuthResponse | AuthErrorResponse> {

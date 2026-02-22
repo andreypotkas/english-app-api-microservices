@@ -2698,7 +2698,7 @@ const book3 = [
     transcription: '[rilíːf]',
     wordTranslate: 'облегчение',
     textMeaningTranslate: 'Облегчение - это хорошее чувство после чего-то плохого или сложного',
-    textExampleTranslate: 'Я почувствовал облегчение, когда услышал хорошие новости',
+    textExampleTranslate: 'Я почувств��вал облегчение, когда услышал хорошие новости',
     id: 1393,
   },
   {
@@ -8402,3 +8402,4 @@ const book3 = [
 ];
 
 export default book3;
+module.exports = book3; module.exports.default = book3;

@@ -4938,7 +4938,7 @@ const book6 = [
     textExample: 'The Ministry of Trade is responsible for taxing imports and exports',
     transcription: '[mínistri:]',
     wordTranslate: 'министерство',
-    textMeaningTranslate: 'Министерство - это правительственное ведомство',
+    textMeaningTranslate: 'Министерство - это правительственное вед��мство',
     textExampleTranslate: 'Министерство торговли отвечает за налогообложение импорта и экспорта',
     id: 3353,
   },
@@ -6185,7 +6185,7 @@ const book6 = [
     transcription: '[bǽkstéidʒ]',
     wordTranslate: 'кулисы',
     textMeaningTranslate: 'Если что-то происходит за кулисами, это происходит за сценой театра',
-    textExampleTranslate: 'После спектакля режиссер вышел за кулисы и поблагодарил актеров',
+    textExampleTranslate: 'После спекта��ля режиссер вышел за кулисы и поблагодарил актеров',
     id: 3442,
   },
   {
@@ -8403,3 +8403,4 @@ const book6 = [
 ];
 
 export default book6;
+module.exports = book6; module.exports.default = book6;

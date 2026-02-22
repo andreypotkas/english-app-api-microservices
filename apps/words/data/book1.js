@@ -5581,7 +5581,7 @@ const book1 = [
     textMeaning: 'A war is a big fight between two groups of people',
     textExample: 'Many young men died in the war',
     transcription: '[wɔːr]',
-    wordTranslate: 'война',
+    wordTranslate: '��ойна',
     textMeaningTranslate: 'Война - это большая битва между двумя группами людей',
     textExampleTranslate: 'Многие молодые люди погибли на войне',
     id: 399,
@@ -6982,7 +6982,7 @@ const book1 = [
     textExample: 'Please take out the trash; it smells bad',
     transcription: '[træʃ]',
     wordTranslate: 'мусор',
-    textMeaningTranslate: 'Мусор - это ненужный материал, нежелательные или бесполезные вещи',
+    textMeaningTranslate: 'Мусор - это ненужный материал, нежелательн��е или бесполезные вещи',
     textExampleTranslate: 'Пожалуйста, выньте мусор; он плохо пахнет',
     id: 499,
   },
@@ -8403,3 +8403,4 @@ const book1 = [
 ];
 
 export default book1;
+module.exports = book1; module.exports.default = book1;

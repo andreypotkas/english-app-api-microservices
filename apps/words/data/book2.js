@@ -1381,7 +1381,7 @@ const book2 = [
     textExample: 'The fog was so thick that I couldn’t see through it',
     transcription: '[θik]',
     wordTranslate: 'толстые',
-    textMeaningTranslate: 'Толстая вещь широкая и прочная',
+    textMeaningTranslate: 'Толстая вещь широкая и п��очная',
     textExampleTranslate: 'Туман был настолько густым, что я не мог видеть сквозь него',
     id: 699,
   },
@@ -2754,7 +2754,7 @@ const book2 = [
     transcription: '[teil]',
     wordTranslate: 'сказка',
     textMeaningTranslate: 'Сказка - это история',
-    textExampleTranslate: 'Она рассказала своим двум друзьям о дикой истории ее дня',
+    textExampleTranslate: 'Она рассказала своим двум друзья�� о дикой истории ее дня',
     id: 797,
   },
   {
@@ -4112,7 +4112,7 @@ const book2 = [
     transcription: '[ʤènəréiʃən]',
     wordTranslate: 'поколение',
     textMeaningTranslate: 'Поколение - это группа людей, которые живут одновременно',
-    textExampleTranslate: 'Мои бабушка и дедушка из другого поколения, чем я',
+    textExampleTranslate: 'Мои бабу��ка и дедушка из другого поколения, чем я',
     id: 894,
   },
   {
@@ -5483,7 +5483,7 @@ const book2 = [
     textExample: 'A microwave oven cooks food in an instant',
     transcription: '[ínstənt]',
     wordTranslate: 'мгновенное',
-    textMeaningTranslate: 'Мгновение - это очень короткий промежуток времени',
+    textMeaningTranslate: 'Мгновение - это очень короткий проме��уток времени',
     textExampleTranslate: 'Микроволновая печь готовит еду в одно мгновение',
     id: 992,
   },
@@ -8402,3 +8402,4 @@ const book2 = [
 ];
 
 export default book2;
+module.exports = book2; module.exports.default = book2;

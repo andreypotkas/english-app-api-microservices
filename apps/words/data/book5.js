@@ -7723,7 +7723,7 @@ const book5 = [
     textMeaning: 'If something happens presently, it is happening right now',
     textExample: 'Presently, our profits are good, but by next year we can do even better',
     transcription: '[prézəntli]',
-    wordTranslate: 'в настоящее время',
+    wordTranslate: 'в настоящ��е время',
     textMeaningTranslate: 'Если что-то происходит сейчас, это происходит прямо сейчас',
     textExampleTranslate: 'В настоящее время наша прибыль хорошая, но к следующему году мы можем добиться еще больших успехов',
     id: 2952,
@@ -8403,3 +8403,4 @@ const book5 = [
 ];
 
 export default book5;
+module.exports = book5; module.exports.default = book5;

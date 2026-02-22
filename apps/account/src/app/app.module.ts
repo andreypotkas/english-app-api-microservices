@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { Account } from './entities/account.entity';
-import { Profile } from './entities/profile.entity';
+import { Account, Profile, UserWord, BookWord } from '@english-app-api/entities';
 import { AuthModule } from './auth/auth.module';
+import { UserWordsModule } from './user-words/user-words.module';
 
 const dbHost = process.env.POSTGRES_HOST || 'localhost';
 const dbPort = parseInt(process.env.POSTGRES_PORT || '5432', 10);
 const dbUser = process.env.POSTGRES_USER || 'postgres';
 const dbPassword = process.env.POSTGRES_PASSWORD || 'postgres';
+const stage = process.env.STAGE || 'dev';
+const dbName = `account_${stage}_db`;
 
 @Module({
   imports: [
@@ -18,11 +20,12 @@ const dbPassword = process.env.POSTGRES_PASSWORD || 'postgres';
       port: dbPort,
       username: dbUser,
       password: dbPassword,
-      database: 'account_db',
-      entities: [Account, Profile],
+      database: dbName,
+      entities: [Account, Profile, UserWord, BookWord],
       synchronize: true,
     }),
     AuthModule,
+    UserWordsModule,
   ],
   controllers: [AppController],
 })

@@ -3,8 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { Account } from '../entities/account.entity';
-import { Profile } from '../entities/profile.entity';
+import { Account, Profile, UserRole } from '@english-app-api/entities';
 import type { RegisterPayload, LoginPayload, AuthResponse, AuthErrorResponse } from '@english-app-api/shared-contracts';
 
 const SALT_ROUNDS = 10;
@@ -30,19 +29,16 @@ export class AuthService {
       };
     }
 
-    const plan = 'free';
-
     const password_hash = bcrypt.hashSync(payload.password, SALT_ROUNDS);
     const account = this.accountRepository.create({
       email: payload.email.toLowerCase(),
       password_hash,
-      role: 'user',
+      role: UserRole.User,
     });
     const savedAccount = await this.accountRepository.save(account);
 
     const profile = this.profileRepository.create({
       account_id: savedAccount.id,
-      plan,
       name: payload.name ?? null,
     });
     await this.profileRepository.save(profile);
@@ -51,7 +47,6 @@ export class AuthService {
       sub: String(savedAccount.id),
       email: savedAccount.email,
       role: savedAccount.role,
-      plan,
     });
     return { accessToken };
   }
@@ -67,14 +62,10 @@ export class AuthService {
     if (!match) {
       return { error: 'Invalid email or password', statusCode: 401 };
     }
-    const profile = await this.profileRepository.findOne({
-      where: { account_id: account.id },
-    });
     const accessToken = this.jwtService.sign({
       sub: String(account.id),
       email: account.email,
       role: account.role,
-      plan: profile.plan,
     });
     return { accessToken };
   }

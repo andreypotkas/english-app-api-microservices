@@ -7,6 +7,8 @@ import { AuthController } from './controllers/auth.controller';
 import { ProfileController } from './controllers/profile.controller';
 import { WordsController } from './controllers/words.controller';
 import { GamesController } from './controllers/games.controller';
+import { UserWordsController } from './controllers/user-words.controller';
+import { BooksController } from './controllers/books.controller';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
@@ -50,7 +52,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
       },
     ]),
   ],
-  controllers: [AuthController, ProfileController, WordsController, GamesController],
+  controllers: [AuthController, ProfileController, WordsController, GamesController, UserWordsController, BooksController],
   providers: [JwtStrategy, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}

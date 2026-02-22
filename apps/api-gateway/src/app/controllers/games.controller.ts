@@ -2,7 +2,7 @@ import { Controller, Post, Body, Inject } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { GAMES } from '@english-app-api/shared-contracts';
+import { GAMES, AccessType } from '@english-app-api/shared-contracts';
 import { ApiTag } from '../decorators/api-endpoint.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { DocPost } from '../decorators/doc-route.decorator';
@@ -13,7 +13,7 @@ import { DocPost } from '../decorators/doc-route.decorator';
 export class GamesController {
   constructor(@Inject('GAMES_SERVICE') private gamesClient: ClientProxy) {}
 
-  @DocPost('start', undefined)
+  @DocPost('start', undefined, AccessType.User)
   @ApiBody({
     schema: {
       type: 'object',

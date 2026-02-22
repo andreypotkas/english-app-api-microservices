@@ -1,20 +1,26 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
-import { WORDS } from '@english-app-api/shared-contracts';
-import type { GetWordPayload, GetWordsListPayload, WordResponse } from '@english-app-api/shared-contracts';
+import { WORDS, BOOKS } from '@english-app-api/shared-contracts';
+import type { GetWordsListPayload } from '@english-app-api/shared-contracts';
+import { Book, BookWord } from '@english-app-api/entities';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern(WORDS.GET_ONE)
-  getWord(payload: GetWordPayload): WordResponse {
-    return this.appService.getWord(payload.wordId);
+  @MessagePattern(WORDS.GET_LIST)
+  async getWordsList(payload: GetWordsListPayload): Promise<BookWord[]> {
+    return this.appService.getWordsList(payload);
   }
 
-  @MessagePattern(WORDS.GET_LIST)
-  getWordsList(payload: GetWordsListPayload): WordResponse[] {
-    return this.appService.getWordsList(payload);
+  @MessagePattern(BOOKS.GET_LIST)
+  async getBooks(payload: { limit: number; offset: number }): Promise<Book[]> {
+    return this.appService.getBooks(payload);
+  }
+
+  @MessagePattern(BOOKS.GET_ONE)
+  async getBook(payload: { id: number }): Promise<Book> {
+    return this.appService.getBook(payload.id);
   }
 }

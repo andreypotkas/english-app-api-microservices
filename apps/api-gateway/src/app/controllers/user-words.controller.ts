@@ -6,7 +6,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { DocGet, DocPost, DocDelete } from '../decorators/doc-route.decorator';
 import { User } from '../../decorators/user.decorator';
 import type { JwtPayload } from '../auth/jwt.strategy';
-import { USER_WORDS, WORDS, UserWordType, AccessType, ApiResponse } from '@english-app-api/shared-contracts';
+import { USER_WORDS, WORDS, UserWordType, AccessType, ApiResponseDto } from '@english-app-api/shared-contracts';
 import { BookWord } from '@english-app-api/entities';
 
 @ApiTag('user-words')
@@ -18,11 +18,11 @@ export class UserWordsController {
     @Inject('WORDS_SERVICE') private wordsClient: ClientProxy,
   ) {}
 
-  @DocPost(':bookWordId/favorite', ApiResponse, AccessType.User)
+  @DocPost(':bookWordId/favorite', ApiResponseDto, AccessType.User)
   async addFavorite(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<ApiResponse> {
+  ): Promise<ApiResponseDto> {
     return lastValueFrom(
       this.accountClient.send(USER_WORDS.ADD, {
         userId: user.sub,
@@ -32,11 +32,11 @@ export class UserWordsController {
     );
   }
 
-  @DocDelete(':bookWordId/favorite', ApiResponse, AccessType.User)
+  @DocDelete(':bookWordId/favorite', ApiResponseDto, AccessType.User)
   async removeFavorite(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<ApiResponse> {
+  ): Promise<ApiResponseDto> {
     return lastValueFrom(
       this.accountClient.send(USER_WORDS.REMOVE, {
         userId: user.sub,
@@ -46,11 +46,11 @@ export class UserWordsController {
     );
   }
 
-  @DocPost(':bookWordId/studied', ApiResponse, AccessType.User)
+  @DocPost(':bookWordId/studied', ApiResponseDto, AccessType.User)
   async addStudied(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<ApiResponse> {
+  ): Promise<ApiResponseDto> {
     return lastValueFrom(
       this.accountClient.send(USER_WORDS.ADD, {
         userId: user.sub,
@@ -60,11 +60,11 @@ export class UserWordsController {
     );
   }
 
-  @DocDelete(':bookWordId/studied', ApiResponse, AccessType.User)
+  @DocDelete(':bookWordId/studied', ApiResponseDto, AccessType.User)
   async removeStudied(
     @User() user: JwtPayload,
     @Param('bookWordId') bookWordId: number,
-  ): Promise<ApiResponse> {
+  ): Promise<ApiResponseDto> {
     return lastValueFrom(
       this.accountClient.send(USER_WORDS.REMOVE, {
         userId: user.sub,

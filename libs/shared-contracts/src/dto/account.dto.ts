@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { UserRole, UserWordType } from '@english-app-api/entities';
 
 export { UserRole, UserWordType };
@@ -41,7 +42,10 @@ export interface UserWordIdsPayload {
   type: UserWordType;
 }
 
-export interface ApiResponse {
+export class ApiResponseDto {
+  @ApiProperty()
   success: boolean;
+
+  @ApiProperty()
   message: string;
 }

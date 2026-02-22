@@ -43,7 +43,7 @@
       "continuous": true,
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
+      "dependsOn": ["build", "copy-data"],
       "options": {
         "buildTarget": "words:build",
         "runBuildTargetDependencies": false
@@ -55,6 +55,13 @@
         "production": {
           "buildTarget": "words:build:production"
         }
+      }
+    },
+    "copy-data": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cp -r src/data ../../dist/apps/words/data",
+        "cwd": "apps/words"
       }
     }
   },

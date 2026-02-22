@@ -21,10 +21,7 @@
       "dependsOn": ["build"],
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
-      "outputs": [
-        "{workspaceRoot}/dist/apps/games/package.json",
-        "{workspaceRoot}/dist/apps/games/pnpm-lock.yaml"
-      ],
+      "outputs": ["{workspaceRoot}/dist/apps/games/package.json", "{workspaceRoot}/dist/apps/games/pnpm-lock.yaml"],
       "options": {
         "buildTarget": "build"
       }

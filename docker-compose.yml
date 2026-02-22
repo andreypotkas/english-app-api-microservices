@@ -2,8 +2,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - '5672:5672'
+      - '15672:15672'
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -16,7 +16,7 @@ services:
   postgres:
     image: postgres:16-alpine
     ports:
-      - "${POSTGRES_HOST_PORT:-5432}:5432"
+      - '${POSTGRES_HOST_PORT:-5432}:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -24,7 +24,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init-dbs.sql:/docker-entrypoint-initdb.d/init-dbs.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -67,7 +67,7 @@ services:
     build: .
     command: node dist/apps/api-gateway/main.js
     ports:
-      - "${GATEWAY_PORT:-3000}:3000"
+      - '${GATEWAY_PORT:-3000}:3000'
     environment:
       PORT: 3000
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672

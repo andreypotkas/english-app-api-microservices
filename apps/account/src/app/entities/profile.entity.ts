@@ -1,28 +1,24 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import type { UserPlan } from '@english-app-api/shared-contracts';
 import { Account } from './account.entity';
 
 @Entity('profiles')
 export class Profile {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'account_id', unique: true })
-  account_id: string;
+  account_id: number;
 
   @OneToOne(() => Account, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'account_id' })
   account: Account;
 
-  @Column({ name: 'display_name', nullable: true })
-  display_name: string | null;
+  @Column({ type: 'varchar', length: 20, default: 'free' })
+  plan: UserPlan;
+
+  @Column({ nullable: true })
+  name: string | null;
 
   @Column({ name: 'avatar_url', nullable: true })
   avatar_url: string | null;

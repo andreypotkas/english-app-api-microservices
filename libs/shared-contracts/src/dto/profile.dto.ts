@@ -4,12 +4,15 @@ export interface GetProfilePayload {
 
 export interface UpdateProfilePayload {
   userId: string;
-  displayName?: string;
+  name?: string;
   avatarUrl?: string;
 }
 
-export interface ProfileResponse {
-  userId: string;
-  displayName: string;
-  avatarUrl?: string;
+/** Аккаунт как из БД без password_hash */
+export interface AccountSafe {
+  id: number;
+  email: string;
+  role: string;
+  created_at: string;
+  updated_at: string;
 }

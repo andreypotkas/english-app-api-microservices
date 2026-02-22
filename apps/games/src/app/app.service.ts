@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type {
-  StartGamePayload,
-  GameSessionResponse,
-} from '@english-app-api/shared-contracts';
+import type { StartGamePayload, GameSessionResponse } from '@english-app-api/shared-contracts';
 
 @Injectable()
 export class AppService {

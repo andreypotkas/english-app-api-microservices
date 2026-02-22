@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { Account } from './entities/account.entity';
 import { Profile } from './entities/profile.entity';
 import { AuthModule } from './auth/auth.module';
@@ -26,6 +25,5 @@ const dbPassword = process.env.POSTGRES_PASSWORD || 'postgres';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

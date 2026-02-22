@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type {
-  GetWordsListPayload,
-  WordResponse,
-} from '@english-app-api/shared-contracts';
+import type { GetWordsListPayload, WordResponse } from '@english-app-api/shared-contracts';
 
 @Injectable()
 export class AppService {
@@ -17,8 +14,6 @@ export class AppService {
 
   getWordsList(payload: GetWordsListPayload): WordResponse[] {
     const limit = payload.limit ?? 10;
-    return Array.from({ length: limit }, (_, i) =>
-      this.getWord(`word-${i}`),
-    );
+    return Array.from({ length: limit }, (_, i) => this.getWord(`word-${i}`));
   }
 }

@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@english-app-api/shared-contracts": [
-        "libs/shared-contracts/src/index.ts"
-      ]
+      "@english-app-api/shared-contracts": ["libs/shared-contracts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

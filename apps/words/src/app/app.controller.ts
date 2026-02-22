@@ -2,11 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
 import { WORDS } from '@english-app-api/shared-contracts';
-import type {
-  GetWordPayload,
-  GetWordsListPayload,
-  WordResponse,
-} from '@english-app-api/shared-contracts';
+import type { GetWordPayload, GetWordsListPayload, WordResponse } from '@english-app-api/shared-contracts';
 
 @Controller()
 export class AppController {

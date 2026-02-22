@@ -14,10 +14,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/english-app-api/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "outFiles": ["${workspaceFolder}/apps/english-app-api/dist/**/*.(m|c|)js", "!**/node_modules/**"]
     },
     {
       "type": "node",
@@ -32,10 +29,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/api-gateway/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "outFiles": ["${workspaceFolder}/apps/api-gateway/dist/**/*.(m|c|)js", "!**/node_modules/**"]
     },
     {
       "type": "node",
@@ -50,10 +44,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/account/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "outFiles": ["${workspaceFolder}/apps/account/dist/**/*.(m|c|)js", "!**/node_modules/**"]
     },
     {
       "type": "node",
@@ -68,10 +59,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/profile/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "outFiles": ["${workspaceFolder}/apps/profile/dist/**/*.(m|c|)js", "!**/node_modules/**"]
     },
     {
       "type": "node",
@@ -86,10 +74,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/words/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "outFiles": ["${workspaceFolder}/apps/words/dist/**/*.(m|c|)js", "!**/node_modules/**"]
     },
     {
       "type": "node",
@@ -104,10 +89,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/games/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "outFiles": ["${workspaceFolder}/apps/games/dist/**/*.(m|c|)js", "!**/node_modules/**"]
     }
   ]
 }

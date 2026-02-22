@@ -5,10 +5,7 @@ import { AppModule } from './app/app.module';
 import { getRabbitMQOptions } from '@english-app-api/shared-contracts';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
-    getRabbitMQOptions('games_queue'),
-  );
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, getRabbitMQOptions('games_queue'));
   await app.listen();
   Logger.log('Games microservice is listening on games_queue');
 }

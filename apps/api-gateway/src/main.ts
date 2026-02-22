@@ -1,10 +1,11 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
@@ -12,8 +13,8 @@ async function bootstrap() {
     .setTitle('English App API')
     .setDescription('API Gateway: auth, account, profile, words, games')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
     .addTag('auth', 'Регистрация и вход')
-    .addTag('account', 'Пользователь по id')
     .addTag('profile', 'Профиль')
     .addTag('words', 'Словарь')
     .addTag('games', 'Игры')

@@ -5,36 +5,9 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Account } from '../entities/account.entity';
 import { Profile } from '../entities/profile.entity';
-import type {
-  UserResponse,
-  UserRole,
-  UserPlan,
-  RegisterPayload,
-  LoginPayload,
-  AuthResponse,
-  AuthErrorResponse,
-  ProfileResponse,
-} from '@english-app-api/shared-contracts';
+import type { RegisterPayload, LoginPayload, AuthResponse, AuthErrorResponse } from '@english-app-api/shared-contracts';
 
 const SALT_ROUNDS = 10;
-
-function toUserResponse(account: Account): UserResponse {
-  return {
-    id: account.id,
-    email: account.email,
-    role: account.role as UserRole,
-    plan: account.plan as UserPlan,
-    createdAt: account.created_at.toISOString(),
-  };
-}
-
-function toProfileResponse(profile: Profile): ProfileResponse {
-  return {
-    userId: profile.account_id,
-    displayName: profile.display_name ?? `User ${profile.account_id}`,
-    avatarUrl: profile.avatar_url ?? undefined,
-  };
-}
 
 @Injectable()
 export class AuthService {
@@ -57,38 +30,30 @@ export class AuthService {
       };
     }
 
-    const role = payload.role ?? 'user';
-    const plan = payload.plan ?? 'free';
-    if (role === 'admin') {
-      return {
-        error: 'Cannot register as admin via this endpoint',
-        statusCode: 400,
-      };
-    }
+    const plan = 'free';
 
     const password_hash = bcrypt.hashSync(payload.password, SALT_ROUNDS);
     const account = this.accountRepository.create({
       email: payload.email.toLowerCase(),
       password_hash,
-      role,
-      plan,
+      role: 'user',
     });
     const savedAccount = await this.accountRepository.save(account);
 
     const profile = this.profileRepository.create({
       account_id: savedAccount.id,
+      plan,
+      name: payload.name ?? null,
     });
     await this.profileRepository.save(profile);
 
     const accessToken = this.jwtService.sign({
-      sub: savedAccount.id,
+      sub: String(savedAccount.id),
       email: savedAccount.email,
       role: savedAccount.role,
+      plan,
     });
-    return {
-      user: toUserResponse(savedAccount),
-      accessToken,
-    };
+    return { accessToken };
   }
 
   async login(payload: LoginPayload): Promise<AuthResponse | AuthErrorResponse> {
@@ -96,52 +61,40 @@ export class AuthService {
       where: { email: payload.email.toLowerCase() },
     });
     if (!account) {
-      return {
-        error: 'Invalid email or password',
-        statusCode: 401,
-      };
+      return { error: 'Invalid email or password', statusCode: 401 };
     }
     const match = bcrypt.compareSync(payload.password, account.password_hash);
     if (!match) {
-      return {
-        error: 'Invalid email or password',
-        statusCode: 401,
-      };
+      return { error: 'Invalid email or password', statusCode: 401 };
     }
+    const profile = await this.profileRepository.findOne({
+      where: { account_id: account.id },
+    });
     const accessToken = this.jwtService.sign({
-      sub: account.id,
+      sub: String(account.id),
       email: account.email,
       role: account.role,
+      plan: profile.plan,
     });
-    return {
-      user: toUserResponse(account),
-      accessToken,
-    };
+    return { accessToken };
   }
 
-  async getUser(userId: string): Promise<UserResponse | null> {
-    const account = await this.accountRepository.findOne({ where: { id: userId } });
-    return account ? toUserResponse(account) : null;
-  }
-
-  async getProfile(userId: string): Promise<ProfileResponse | null> {
+  async getProfile(id: number): Promise<Profile> {
     const profile = await this.profileRepository.findOne({
-      where: { account_id: userId },
+      where: { account_id: id },
+      relations: { account: true },
     });
-    return profile ? toProfileResponse(profile) : null;
+    console.log(profile);
+
+    return profile;
   }
 
-  async updateProfile(
-    userId: string,
-    data: { displayName?: string; avatarUrl?: string },
-  ): Promise<ProfileResponse | null> {
+  async updateProfile(id: number, data: { name?: string; avatarUrl?: string }): Promise<Profile> {
     const profile = await this.profileRepository.findOne({
-      where: { account_id: userId },
+      where: { account_id: id },
     });
-    if (!profile) return null;
-    if (data.displayName !== undefined) profile.display_name = data.displayName;
+    if (data.name !== undefined) profile.name = data.name;
     if (data.avatarUrl !== undefined) profile.avatar_url = data.avatarUrl;
-    await this.profileRepository.save(profile);
-    return toProfileResponse(profile);
+    return this.profileRepository.save(profile);
   }
 }

@@ -65,7 +65,7 @@ export class SeedService {
       });
       const savedBook = await this.bookRepository.save(book);
 
-      const filePath = path.join(process.cwd(), bookData.file);
+      const filePath = path.join(__dirname, '../data', path.basename(bookData.file));
       const words = require(filePath);
       const bookWords = words.map((wordData: any) =>
         this.bookWordRepository.create({

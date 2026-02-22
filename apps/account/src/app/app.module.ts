@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { Account, Profile, UserWord, BookWord } from '@english-app-api/entities';
+import { Account, Profile, UserWord, BookWord, Book } from '@english-app-api/entities';
 import { AuthModule } from './auth/auth.module';
 import { UserWordsModule } from './user-words/user-words.module';
 
@@ -21,7 +21,7 @@ const dbName = `account_${stage}_db`;
       username: dbUser,
       password: dbPassword,
       database: dbName,
-      entities: [Account, Profile, UserWord, BookWord],
+      entities: [Account, Profile, UserWord, BookWord, Book],
       synchronize: true,
     }),
     AuthModule,

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Book, BookWord } from '@english-app-api/entities';
-import * as path from 'path';
+import { book1, book2, book3, book4, book5, book6 } from '../data';
 
 @Injectable()
 export class SeedService {
@@ -25,36 +25,12 @@ export class SeedService {
     this.logger.log('Seeding database with books and words...');
 
     const booksData = [
-      {
-        title: 'Книга 1: Базовые слова',
-        description: 'Основные слова для начинающих: повседневные предметы, действия и понятия',
-        file: 'data/book1.js',
-      },
-      {
-        title: 'Книга 2: Наука и эксперименты',
-        description: 'Слова связанные с наукой, экспериментами и исследованиями',
-        file: 'data/book2.js',
-      },
-      {
-        title: 'Книга 3: Природа и окружающий мир',
-        description: 'Слова о природе, погоде, растениях и животных',
-        file: 'data/book3.js',
-      },
-      {
-        title: 'Книга 4: Дом и повседневная жизнь',
-        description: 'Слова о доме, семье, работе и повседневных делах',
-        file: 'data/book4.js',
-      },
-      {
-        title: 'Книга 5: Путешествия и приключения',
-        description: 'Слова о путешествиях, транспорте и новых впечатлениях',
-        file: 'data/book5.js',
-      },
-      {
-        title: 'Книга 6: Продвинутая лексика',
-        description: 'Сложные слова и выражения для продолжающих изучение',
-        file: 'data/book6.js',
-      },
+      { title: 'Книга 1: Базовые слова', description: 'Основные слова для начинающих: повседневные предметы, действия и понятия', words: book1 },
+      { title: 'Книга 2: Наука и эксперименты', description: 'Слова связанные с наукой, экспериментами и исследованиями', words: book2 },
+      { title: 'Книга 3: Природа и окружающий мир', description: 'Слова о природе, погоде, растениях и животных', words: book3 },
+      { title: 'Книга 4: Дом и повседневная жизнь', description: 'Слова о доме, семье, работе и повседневных делах', words: book4 },
+      { title: 'Книга 5: Путешествия и приключения', description: 'Слова о путешествиях, транспорте и новых впечатлениях', words: book5 },
+      { title: 'Книга 6: Продвинутая лексика', description: 'Сложные слова и выражения для продолжающих изучение', words: book6 },
     ];
 
     for (const bookData of booksData) {
@@ -65,9 +41,7 @@ export class SeedService {
       });
       const savedBook = await this.bookRepository.save(book);
 
-      const filePath = path.join(__dirname, '../data', path.basename(bookData.file));
-      const words = require(filePath);
-      const bookWords = words.map((wordData: any) =>
+      const bookWords = bookData.words.map((wordData) =>
         this.bookWordRepository.create({
           book_id: savedBook.id,
           word: wordData.word,

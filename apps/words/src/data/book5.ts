@@ -1,4 +1,4 @@
-const book5 = [
+export const book5 = [
   {
     word: 'aroma',
     image: 'files/01_2401.jpg',

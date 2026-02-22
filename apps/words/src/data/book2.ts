@@ -1,4 +1,4 @@
-const book2 = [
+export const book2 = [
   {
     word: 'because',
     image: 'files/01_0601.jpg',

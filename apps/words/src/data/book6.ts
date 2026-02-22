@@ -1,4 +1,4 @@
-const book6 = [
+export const book6 = [
   {
     word: 'adverse',
     image: 'files/01_3001.jpg',
